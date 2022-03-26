@@ -1,5 +1,5 @@
-import java.io.FileInputStream;
-import java.util.Properties;
+import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     java
@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "im.f24"
-version = "1.0"
+version = "1.1"
 
 repositories {
     mavenCentral()

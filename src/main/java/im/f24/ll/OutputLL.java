@@ -6,8 +6,6 @@ import java.util.function.Supplier;
 
 public class OutputLL implements LL, Output {
 
-    private Level logLevel = Level.INFO;
-
     private final Name name;
     private final Output[] outputs;
 
@@ -21,20 +19,14 @@ public class OutputLL implements LL, Output {
         this.outputs = outputs;
     }
 
-    public void setLogLevel(Level level) {
-        this.logLevel = level;
-    }
-
     @Override
     public void log(Level level, String msg) {
-        if (level.value < logLevel.value) return;
-
         log(level, new Date(), name, msg);
     }
 
     @Override
     public void log(Level level, Supplier<String> msg) {
-        log(level, msg.get());
+        log(level, new Date(), name, msg);
     }
 
     @Override
@@ -44,6 +36,13 @@ public class OutputLL implements LL, Output {
 
     @Override
     public void log(Level level, Date date, Name name, String msg) {
+        for (Output output : outputs) {
+            output.log(level, date, name, msg);
+        }
+    }
+
+    @Override
+    public void log(Level level, Date date, Name name, Supplier<String> msg) {
         for (Output output : outputs) {
             output.log(level, date, name, msg);
         }
